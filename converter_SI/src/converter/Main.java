@@ -6,14 +6,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        for(SILengthConverter siLengthConverter : SILengthConverter.values()){
+        for (SILengthConverter siLengthConverter : SILengthConverter.values()) {
             System.out.println(siLengthConverter.getUnit());
-        };
+        }
+        ;
         System.out.println("\nYou should choose a unit as basic");
         Scanner scanner = new Scanner(System.in);
         String basicUnit = scanner.nextLine();
         UnitValidator unitValidator = new UnitValidator();
-        if(unitValidator.isValid(basicUnit)){
+        if (unitValidator.isValid(basicUnit)) {
             System.out.println("\nYou should give the rate now: ");
             double rateOfUser = scanner.nextDouble();
             printConversationResult(basicUnit, rateOfUser);
@@ -29,7 +30,7 @@ public class Main {
 
 
     private static SILengthConverter getSIUnit(String basicUnit) {
-        switch (basicUnit){
+        switch (basicUnit.toLowerCase()) {
             case "m" -> {
                 return SILengthConverter.M;
             }

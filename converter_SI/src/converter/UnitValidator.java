@@ -1,9 +1,9 @@
 package converter;
 
-public class UnitValidator extends Validator<String>{
+public class UnitValidator extends Validator<String> {
     @Override
     boolean isValid(String s) {
-        switch (s.toLowerCase()){
+        switch (s.toLowerCase()) {
             case "mm" -> {
                 return true;
             }
