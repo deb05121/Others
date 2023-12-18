@@ -1,0 +1,21 @@
+//public static final constats:
+public class Direction {
+	public static final Direction UP = new Direction();   // static -> only one instance of that in the class, it belongs to a type itself(Direction)
+	public static final Direction DOWN = new Direction() // final -> there is only one way to access it, if we don't change the reference of an object
+	public static final Direction RIGHT = new Direction();
+	public static final Direction LEFT = new Direction();
+}
+
+	//This requires a constructor:	
+	//public Direction(){}))
+	
+
+the following compact and easy code is equivalent to the above:
+
+public enum Direction {
+	UP, DOWN, RIGHT, LEFT;
+}
+
+//The default constructor is made by the compiler automatically when the programmer doesn't write another one.))
+
+

@@ -1,0 +1,123 @@
+ENUM
+The enum class is actually an enumeration.
+Java 5 first introduced the enum keyword. It denotes a special type of class that always extends the java.lang.Enum class.
+
+Constants defined this way make the code more readable, allow for compile-time checking, document the list of accepted values upfront, and avoid unexpected behavior due to invalid values being passed in.
+Additionally, enums come with many useful methods that we would otherwise need to write if we were using traditional public static final constants.
+Now that we have a basic understanding of what enums are and how we can use them, we’ll take our previous example to the next level by defining some extra API methods on the enum:
+
+public class Pizza {
+    private PizzaStatus status;
+    public enum PizzaStatus {
+        ORDERED,
+        READY,
+        DELIVERED;
+    }
+
+    public boolean isDeliverable() {
+        if (getStatus() == PizzaStatus.READY) {
+            return true;
+        }
+        return false;
+    }
+    
+    // Methods that set and get the status variable.
+
+
+Since enum types ensure that only one instance of the constants exist in the JVM, we can safely use the “==” operator to compare two variables, like we did in the above example. Furthermore, the “==” operator provides compile-time and run-time safety.
+Either value can be null and we won’t get a NullPointerException. 
+
+4. Using Enum Types in Switch Statements
+
+We can use enum types in switch statements also:
+
+public int getDeliveryTimeInDays() {
+    switch (status) {
+        case ORDERED: return 5;
+        case READY: return 2;
+        case DELIVERED: return 0;
+    }
+    return 0;
+}
+
+5. Fields, Methods and Constructors in Enums
+
+We can define constructors, methods, and fields inside enum types, which makes them very powerful.
+
+We’ll see how we can get rid of the if and switch statements used before:
+public class Pizza {
+
+    private PizzaStatus status;
+    public enum PizzaStatus {
+        ORDERED (5){					//these are enum instances
+            @Override						//this is instance method
+            public boolean isOrdered() {
+                return true;
+            }
+        },
+        READY (2){
+            @Override
+            public boolean isReady() {
+                return true;
+            }
+        },
+        DELIVERED (0){
+            @Override
+            public boolean isDelivered() {
+                return true;
+            }
+        };
+
+        private int timeToDelivery;		//this is a field of enum
+
+        public boolean isOrdered() {return false;}		//these are class methods
+
+        public boolean isReady() {return false;}
+
+        public boolean isDelivered(){return false;}
+
+        public int getTimeToDelivery() {
+            return timeToDelivery;
+        }
+
+        PizzaStatus (int timeToDelivery) {				//this is the constructor
+            this.timeToDelivery = timeToDelivery;
+        }
+    }
+
+    public boolean isDeliverable() {
+        return this.status.isReady();
+    }
+
+    public void printTimeToDeliver() {
+        System.out.println("Time to delivery is " + 
+          this.getStatus().getTimeToDelivery());
+    }
+
+6. EnumSet and EnumMap
+(6.1. EnumSet)
+6.2. EnumMap
+
+EnumMap is a specialized Map implementation meant to be used with enum constants as keys. Compared to its counterpart HashMap, it’s an efficient and compact implementation that’s internally represented as an array:
+
+public static EnumMap<PizzaStatus, List<Pizza>> 
+  groupPizzaByStatus(List<Pizza> pizzaList) {
+    EnumMap<PizzaStatus, List<Pizza>> pzByStatus = 
+      new EnumMap<PizzaStatus, List<Pizza>>(PizzaStatus.class);
+    
+    for (Pizza pz : pizzaList) {
+        PizzaStatus status = pz.getStatus();
+        if (pzByStatus.containsKey(status)) {
+            pzByStatus.get(status).add(pz);
+        } else {
+            List<Pizza> newPzList = new ArrayList<Pizza>();
+            newPzList.add(pz);
+            pzByStatus.put(status, newPzList);
+        }
+    }
+    return pzByStatus;
+}
+
+
+
+

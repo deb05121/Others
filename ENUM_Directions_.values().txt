@@ -1,0 +1,43 @@
+public enum Direction {
+	UP("fel", 0),
+	DOWN("le", 1),
+	RIGHT("jobbra", 2)
+	@Override
+	public String getDirectionName() {
+		return "This is right."
+	}
+	, LEFT("blara", 3);
+	
+	private final String name;
+	private final int code;
+	
+	private Direction(String name, int code){
+		this.name = name;
+		this.code = code;
+	}
+	public String getName(){
+		return name;
+	}
+	
+	public int getCode(){
+		return code;
+	}
+	
+	public String getDirectionName(){
+		return "Any"
+
+}
+
+
+
+public class Main {
+	public static void main(String[] args) {
+		Direction[] values = Direction.values();
+		for( Direction direction : values) {
+			System.out.println(direction);
+			System.out.println(direction.getName());
+			System.out.println(direction.getCode());
+			System.out.println(direction.getDirectionName());
+		}
+	}
+}
