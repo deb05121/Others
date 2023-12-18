@@ -1,25 +1,61 @@
 package converter;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-        double meters = 1;
-        for (SILengthConverter sILengthConverter : SILengthConverter.values()) {
-            System.out.print(meters + " m = " + sILengthConverter.convert(SILengthConverter.M, meters) + " " + sILengthConverter.getUnit() + "\n");
-        }
 
-        System.out.println();
-        double yard = 10;
-        for (SILengthConverter sILengthConverter : SILengthConverter.values()) {
-            System.out.printf("%.1f %s %.5f %s \n", yard, "yd =", sILengthConverter.convert(SILengthConverter.YARD, yard), sILengthConverter.getUnit());
+        for(SILengthConverter siLengthConverter : SILengthConverter.values()){
+            System.out.println(siLengthConverter.getUnit());
+        };
+        System.out.println("\nYou should choose a unit as basic");
+        Scanner scanner = new Scanner(System.in);
+        String basicUnit = scanner.nextLine();
+        UnitValidator unitValidator = new UnitValidator();
+        if(unitValidator.isValid(basicUnit)){
+            System.out.println("\nYou should give the rate now: ");
+            double rateOfUser = scanner.nextDouble();
+            printConversationResult(basicUnit, rateOfUser);
         }
+    }
 
-        System.out.println();
-        double feet = 3;
+    private static void printConversationResult(String unit, double rate) {
+
         for (SILengthConverter sILengthConverter : SILengthConverter.values()) {
-            System.out.printf("%.1f %s %.3f %s \n", feet, "ft =", sILengthConverter.convert(SILengthConverter.FEET, feet), sILengthConverter.getUnit());
+            System.out.printf("%.1f %s%s %.5f %s \n", rate, unit, " = ", sILengthConverter.convert(getSIUnit(unit), rate), sILengthConverter.getUnit());
         }
+    }
 
+
+    private static SILengthConverter getSIUnit(String basicUnit) {
+        switch (basicUnit){
+            case "m" -> {
+                return SILengthConverter.M;
+            }
+            case "mm" -> {
+                return SILengthConverter.MM;
+            }
+            case "cm" -> {
+                return SILengthConverter.CM;
+            }
+            case "dm" -> {
+                return SILengthConverter.DM;
+            }
+            case "km" -> {
+                return SILengthConverter.KM;
+            }
+            case "feet" -> {
+                return SILengthConverter.FEET;
+            }
+            case "yard" -> {
+                return SILengthConverter.YARD;
+            }
+            case "mile" -> {
+                return SILengthConverter.MILE;
+            }
+        }
+        return null;
     }
 }
 
